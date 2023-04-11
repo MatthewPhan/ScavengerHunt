@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
     <title>Main Page</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
@@ -75,19 +75,35 @@
     <div style="width: 500px" id="qr-reader"></div>
 
     <script>
-        function onScanSuccess(qrCodeMessage) { /** decoded message */ }
         var html5QrcodeScanner = new Html5QrcodeScanner(
             "qr-reader", { fps: 10, qrbox: 250 });
+
+        let decodedText = ""
+
+        function onScanSuccess(decodedText, decodedResult) { 
+            // Handle on success condition with the decoded text or result.
+            console.log(`Scan result: ${decodedText}`, decodedResult);
+
+            // To stop the scanner (video feed) and clear the scan area.
+            html5QrcodeScanner.clear();
+
+            document.getElementById("data").innerHTML = decodedText;
+
+         }
+
         html5QrcodeScanner.render(onScanSuccess);
 
         document.querySelector('#qr-reader').removeAttribute('style');
 
     </script>
 
+    <h2>This is the QR output: <span id="data"></span>></h2>>
+
     <div id="qrcontainer">
         <div class="vertical-center">
-            <button type="button" id="btn-scan-qr" class="btn btn-primary">SCAN HERE <span class="bi bi-qr-code-scan"></span></button>
-        </div> 
+            <button type="button" id="btn-scan-qr" class="btn btn-primary">SCAN HERE <span
+                    class="bi bi-qr-code-scan"></span></button>
+        </div>
 
         <canvas hidden="" id="qr-canvas"></canvas>
 
