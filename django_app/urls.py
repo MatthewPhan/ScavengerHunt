@@ -19,6 +19,7 @@ from django.urls import path
 from scavenger import views
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('/index', views.main_page, name='main_page'),
     path('', views.splash_screen, name='splash'),
 ]
