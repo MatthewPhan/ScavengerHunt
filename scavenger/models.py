@@ -8,8 +8,11 @@ from PIL import Image, ImageDraw
 
 class Location(models.Model):
 
+    # Location var
     location = models.CharField(max_length=100)
-    code = models.ImageField(blank=True, upload_to='static/qrcodes')
+
+    # Path to store qr
+    code = models.ImageField(blank=True, upload_to='qrcodes')
 
     def save(self, *args, **kwargs):
         # Generate QR
