@@ -11,6 +11,7 @@
     <script src="../node_modules/html5-qrcode/html5-qrcode.min.js" type="node_modules"></script>
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -72,7 +73,7 @@
         </div>
     </div>
 
-    <div style="width: 500px" id="qr-reader"></div>
+    <div style="width: 500px" id="qr-reader" data-csrf-token="{% csrf_token %}"></div>
 
     <script>
         var html5QrcodeScanner = new Html5QrcodeScanner(
@@ -80,24 +81,38 @@
 
         let decodedText = ""
 
-        function onScanSuccess(decodedText, decodedResult) { 
+        function onScanSuccess(decodedText, decodedResult) {
             // Handle on success condition with the decoded text or result.
             console.log(`Scan result: ${decodedText}`, decodedResult);
 
-            // To stop the scanner (video feed) and clear the scan area.
-            html5QrcodeScanner.clear();
+            // Send the data to the Django view using AJAX POST
+            var csrfToken = document.getElementById("qr-reader").getAttribute("data-csrf-token");
 
-            document.getElementById("data").innerHTML = decodedText;
+            // // Send the data to the Django view using AJAX POST
+            $.ajax({
+                type: 'POST',
+                url: "",
+                headers: {
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                data: {
+                    'decodedText': decodedText
+                },
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
 
-         }
+        }
 
         html5QrcodeScanner.render(onScanSuccess);
 
         document.querySelector('#qr-reader').removeAttribute('style');
 
     </script>
-
-    <h2>This is the QR output: <span id="data"></span>></h2>>
 
     <div id="qrcontainer">
         <div class="vertical-center">
