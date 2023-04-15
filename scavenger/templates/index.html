@@ -12,9 +12,11 @@
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
 </head>
 
 <body>
+
 
     <div class="grid">
         <div class="cell">
@@ -97,13 +99,13 @@
                 },
                 data: {
                     'decodedText': decodedText
-                },
-                success: function (response) {
-                    console.log(response);
-                },
-                error: function (xhr, status, error) {
-                    console.log(xhr.responseText);
                 }
+                // success: function (response) {
+                //     console.log(response);
+                // },
+                // error: function (xhr, status, error) {
+                //     console.log(xhr.responseText);
+                // }
             });
 
         }
@@ -113,6 +115,14 @@
         document.querySelector('#qr-reader').removeAttribute('style');
 
     </script>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+    </ul>
+    {% endif %}
 
     <div id="qrcontainer">
         <div class="vertical-center">
@@ -129,7 +139,6 @@
     </div>
 
     <script type="module" src="../static/js/qrCodeScanner.js"></script>
-
 
 </body>
 
