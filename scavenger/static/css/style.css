@@ -38,7 +38,11 @@
     text-align: center;
   }
 
-
+  /* Style for scanned location icons */
+  .scannedLocation {
+    opacity:0.4;
+    filter:alpha(opacity=40); /* For IE8 and earlier */
+  }
 /* Animation CSS */
 .container {
     display: -webkit-box;

@@ -24,4 +24,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', views.main_page, name='main_page'),
     path('', views.splash_screen, name='splash'),
+    path('scan_qr_validation/', views.scan_qr_validation, name='scan_qr_validation'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'scavenger',
     'sslserver',
-    'jquery'
+    'jquery',
+    'django_cleanup'
 ]
 
 MIDDLEWARE = [
@@ -145,4 +146,3 @@ MESSAGE_TAGS = {
         messages.WARNING: 'alert-warning',
         messages.ERROR: 'alert-danger',
  }
-

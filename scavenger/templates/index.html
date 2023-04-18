@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>Main Page</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
@@ -12,77 +12,37 @@
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body>
+<body onload="scannedLocationsStyle(); completedStatus();">
 
 
     <div class="grid">
-        <div class="cell">
-            <div class="inner">
-                <div class="icon"></div>
-                <div class="caption">Location A</div>
+        {% if locationNameList %}
+            {% for location in locationNameList %}
+            <div class="cell">
+                <div class="inner">
+                    <div class="icon" id="{{location}}"></div>
+                    <div class="caption">{{location}}</div>
+                </div>
             </div>
-        </div>
-        <div class="cell">
-            <div class="inner">
-                <div class="icon"></div>
-                <div class="caption">Location B</div>
-            </div>
-        </div>
-        <div class="cell">
-            <div class="inner">
-                <div class="icon"></div>
-                <div class="caption">Location C</div>
-            </div>
-        </div>
-        <div class="cell">
-            <div class="inner">
-                <div class="icon"></div>
-                <div class="caption">Location D</div>
-            </div>
-        </div>
-        <div class="cell">
-            <div class="inner">
-                <div class="icon"></div>
-                <div class="caption">Location E</div>
-            </div>
-        </div>
-        <div class="cell">
-            <div class="inner">
-                <div class="icon"></div>
-                <div class="caption">Location F</div>
-            </div>
-        </div>
-        <div class="cell">
-            <div class="inner">
-                <div class="icon"></div>
-                <div class="caption">Location G</div>
-            </div>
-        </div>
-        <div class="cell">
-            <div class="inner">
-                <div class="icon"></div>
-                <div class="caption">Location H</div>
-            </div>
-        </div>
-        <div class="cell">
-            <div class="inner">
-                <div class="icon"></div>
-                <div class="caption">Location I</div>
-            </div>
-        </div>
+            {% endfor %}
+        {% endif %}
     </div>
 
     <div style="width: 500px" id="qr-reader" data-csrf-token="{% csrf_token %}"></div>
 
     <script>
+
+        // HTML5QrcodeScanner
         var html5QrcodeScanner = new Html5QrcodeScanner(
             "qr-reader", { fps: 10, qrbox: 250 });
 
         let decodedText = ""
 
+        // Process QR Code using HTML5QRcodeScanner
         function onScanSuccess(decodedText, decodedResult) {
             // Handle on success condition with the decoded text or result.
             console.log(`Scan result: ${decodedText}`, decodedResult);
@@ -93,19 +53,61 @@
             // // Send the data to the Django view using AJAX POST
             $.ajax({
                 type: 'POST',
-                url: "",
+                url: "/scan_qr_validation/",
+                dataType: 'json',
                 headers: {
                     "X-CSRFToken": "{{ csrf_token }}"
                 },
                 data: {
                     'decodedText': decodedText
+                },
+                success: function (response, status, xhr) {
+                    var result = response['success'];
+                    if (result) {
+                        // Display success alert
+                        var newLocation = response['locationName'];
+                        console.log("You have found a new location - " + newLocation + "!");
+                        Swal.fire({
+                            title: "Good job!",
+                            text: "You have found a new location - " + newLocation + "!",
+                            icon: 'success'
+                        })
+
+                        // Change the CSS of the newly scanned location by adding the custom CSS class "scannedLocation" 
+                        document.getElementById(newLocation).classList.add("scannedLocation");
+
+                        // Run completedStatus() to determine if user has completed the game after this scan
+                        completedStatus();
+
+                    }
+                    else {
+                        var errMsg = response['errorMsg'];
+
+                        // Display invalid QR Code alert
+                        if (errMsg === "INVALID") {
+                            console.log("Invalid QR! Only scan QR Codes generated by NUS SoC Scavenger Hunt Web App!");
+                            Swal.fire({
+                                title: "Oops!",
+                                text: "Invalid QR! Only scan QR Codes generated by NUS SoC Scavenger Hunt Web App!",
+                                icon: 'error'
+                            })
+                        }
+
+                        // Display duplicate QR Code alert
+                        if (errMsg === "EXIST") {
+                            console.log("QR Code for this location already scanned! Please scan other locations!");
+                            Swal.fire({
+                                title: "Already Scanned!",
+                                text: "QR Code for this location already scanned! Please scan other locations!",
+                                icon: 'warning'
+                            })
+                        }
+                    }
+                },
+                // a failure callback that gets invoked in case there is any error while making the request
+                error: function (xhr, status, error) {
+                    console.log(xhr.responseText);
                 }
-                // success: function (response) {
-                //     console.log(response);
-                // },
-                // error: function (xhr, status, error) {
-                //     console.log(xhr.responseText);
-                // }
             });
 
         }
@@ -113,16 +115,39 @@
         html5QrcodeScanner.render(onScanSuccess);
 
         document.querySelector('#qr-reader').removeAttribute('style');
+        
+        // Style all the icons in cookie "scannedLocationListCookie" (to run this everytime web app loads)
+        function scannedLocationsStyle(){
+            // Get the value of cookie "scannedLocationListCookie", note it returns a string representation, [\"location_1\"\054 \"location_2\"..]
+            var scannedLocationListCookieValue = Cookies.get('scannedLocationListCookie');
+            
+            // Only process accordingly when there are values in the cookie "scannedLocationListCookie"
+            if (scannedLocationListCookieValue) {
+                // Convert the string representation to list
+                scannedLocationListCookieValue = JSON.parse(scannedLocationListCookieValue.replaceAll("\\054", ",").replaceAll("\\", ""));
+                console.log(scannedLocationListCookieValue);
+                
+                // Change the CSS for all the locations that are already scanned (loop through the list) by adding the custom CSS class "scannedLocation"
+                for (var i = 0; i < scannedLocationListCookieValue.length; i++) {
+                    document.getElementById(scannedLocationListCookieValue[i]).classList.add("scannedLocation");
+                }
+            }
+        }
+
+        // Determine if user completed the game by checking cookie "completedStatusCookie" & style the web app accordingly (to run this everytime web app loads)
+        function completedStatus(){
+            // Get the value of cookie "completedStatusCookie"
+            var completedStatusCookieValue = Cookies.get('completedStatusCookie');
+            if (completedStatusCookieValue === 'yes') {
+                // Show the hidden django-social-share modal pop-up -TODO
+                console.log("User has successfully completed NUS Soc Scavenger Hunt game 2023!");
+
+            }
+        }
 
     </script>
 
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-            {% endfor %}
-    </ul>
-    {% endif %}
+    <!-- TODO add in the modal pop-up for completion of Scavenger Hunt game with social sharing features -->
 
     <div id="qrcontainer">
         <div class="vertical-center">
