@@ -161,3 +161,54 @@
   background-color: white;
 }
 
+
+/* Modal CSS */
+.mt-5 {
+  display: none;
+}
+
+.text {
+  padding-left: 10px;
+}
+
+.share_btn {
+  font-size:36px;
+  cursor:pointer;
+} 
+.share_links { list-style: none;
+  }
+  
+.share_links li {
+    display: inline-block;
+    background-color: black;
+    margin: 15px;
+    border-radius: 50%;
+    background: #000;
+  }
+.share_icon {
+      color: white;
+      display: table-cell;
+      vertical-align: middle; 
+      text-align: center;
+      text-decoration: none;
+      font-size: 32px;
+      height: 80px;
+      width: 80px;
+
+}
+.share_links .bg_fb:hover {
+   color: #fff;
+   background:#3b5998;
+}
+.share_links .bg_linkedln:hover {
+   color: #fff;
+   background:#0072b1 ;
+}
+.share_links .bg_twitter:hover {
+   color: #fff;
+   background:#1DA1F2;
+}
+
+.share_links li:hover  .share_icon {
+   color: #fff;
+}

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-b-bn4t876c!e4##=4(n1!2)1!m$g6adfxgny8_58jzo61%4xxs
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.12', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['192.168.1.12', 'localhost', '127.0.0.1', '*']
 
 
 # Application definition
@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'scavenger',
     'sslserver',
     'jquery',
-    'django_cleanup'
+    'django_cleanup',
+    'django_social_share'
 ]
 
 MIDDLEWARE = [

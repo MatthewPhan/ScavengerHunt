@@ -5,15 +5,37 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Main Page</title>
+    <title>NUS SOC Scavenger Hunt'23</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+
     <script src="../node_modules/html5-qrcode/html5-qrcode.min.js" type="node_modules"></script>
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+
+    <!----------------Links--------------------->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+
 </head>
 
 <body onload="scannedLocationsStyle(); completedStatus();">
@@ -21,14 +43,14 @@
 
     <div class="grid">
         {% if locationNameList %}
-            {% for location in locationNameList %}
-            <div class="cell">
-                <div class="inner">
-                    <div class="icon" id="{{location}}"></div>
-                    <div class="caption">{{location}}</div>
-                </div>
+        {% for location in locationNameList %}
+        <div class="cell">
+            <div class="inner">
+                <div class="icon" id="{{location}}"></div>
+                <div class="caption">{{location}}</div>
             </div>
-            {% endfor %}
+        </div>
+        {% endfor %}
         {% endif %}
     </div>
 
@@ -115,18 +137,18 @@
         html5QrcodeScanner.render(onScanSuccess);
 
         document.querySelector('#qr-reader').removeAttribute('style');
-        
+
         // Style all the icons in cookie "scannedLocationListCookie" (to run this everytime web app loads)
-        function scannedLocationsStyle(){
+        function scannedLocationsStyle() {
             // Get the value of cookie "scannedLocationListCookie", note it returns a string representation, [\"location_1\"\054 \"location_2\"..]
             var scannedLocationListCookieValue = Cookies.get('scannedLocationListCookie');
-            
+
             // Only process accordingly when there are values in the cookie "scannedLocationListCookie"
             if (scannedLocationListCookieValue) {
                 // Convert the string representation to list
                 scannedLocationListCookieValue = JSON.parse(scannedLocationListCookieValue.replaceAll("\\054", ",").replaceAll("\\", ""));
                 console.log(scannedLocationListCookieValue);
-                
+
                 // Change the CSS for all the locations that are already scanned (loop through the list) by adding the custom CSS class "scannedLocation"
                 for (var i = 0; i < scannedLocationListCookieValue.length; i++) {
                     document.getElementById(scannedLocationListCookieValue[i]).classList.add("scannedLocation");
@@ -135,13 +157,13 @@
         }
 
         // Determine if user completed the game by checking cookie "completedStatusCookie" & style the web app accordingly (to run this everytime web app loads)
-        function completedStatus(){
+        function completedStatus() {
             // Get the value of cookie "completedStatusCookie"
             var completedStatusCookieValue = Cookies.get('completedStatusCookie');
             if (completedStatusCookieValue === 'yes') {
                 // Show the hidden django-social-share modal pop-up -TODO
                 console.log("User has successfully completed NUS Soc Scavenger Hunt game 2023!");
-
+                $('#myModal').modal('show');
             }
         }
 
@@ -164,6 +186,113 @@
     </div>
 
     <script type="module" src="../static/js/qrCodeScanner.js"></script>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body text-center">
+                    <h3>Congratulations!</h3>
+                    <h5> You have conquered SOC! <br> Claim your prize at xxx </h5>
+
+                    <!-- Social Media Icons (Not displayed unless WebShare API fails - catch error) -->
+                    <div class="mt-5" id="socialmedia">
+                        <ul class="share_links">
+                            <li class="bg_fb">
+                                <!-- Links to be changed to actual site URL -->
+                                <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A//05c5-116-86-80-114.ngrok-free.app/index/"
+                                    class="share_icon" rel="tooltip" title="Facebook">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                            </li>
+
+                            <li class="bg_linkedln"><a href="https://www.LinkedIn.com/shareArticle?mini=true&url=https://05c5-116-86-80-114.ngrok-free.app&title=NUS SOC Scavenger Hunt Completed&summary=&source=" class="share_icon" rel="tooltip" title="Linkedln"><i
+                                        class=" fa fa-linkedin"></i></a></li>
+
+                            <li class="bg_twitter"><a href="https://twitter.com/intent/tweet?url=https://05c5-116-86-80-114.ngrok-free.app&text=NUS%20SOC%20Scavenger%20Hunt%20Completed!" class="share_icon" rel="tooltip" title="Twitter"><i
+                                        class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+
+                    <br>
+
+                    <button type="button" class="btn btn-primary" id="sharebtn">
+                        <i class="bi bi-share"></i><span class="text">SHARE</span>
+                    </button>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        const title = window.document.title;
+        const url = window.document.location.href;
+        const shareButton = document.getElementById('sharebtn');
+
+        const shareData = {
+            title: `${title}`,
+            text: "Congratulations, you have conquered SOC's scavenger hunt!",
+            url: `${url}`
+        };
+
+        // When button is pressed 
+        shareButton.addEventListener("click", async () => {
+            try {
+
+                // Fetch image
+                const response = await fetch("../media/poster/congrats.jpeg");
+
+                // Convert to blob
+                const blob = await response.blob();
+
+                // Pass blob into file var 
+                const file = new File([blob], "congrats.jpeg", { type: "image/jpeg" });
+
+                // Check if file is supported by user agent (Validating share data), if return true share media file. If false, share URL instead
+                if (navigator.canShare({ files: [file] })) {
+
+                    //Share Media File
+                    await navigator.share({
+                        files: [file]
+                    });
+
+                    console.log("File shared successfully.");
+
+                } else {
+
+                    //Share URL, Text and Title
+                    await navigator.share(shareData);
+                    console.log("URL shared successfully.");
+
+                }
+
+            } catch (err) {
+
+                console.log(err);
+
+                if (err.name != "AbortError") {
+                    // Remove Share Button and Display Main Social Media Icons to share manually without Web Share API
+                    var x = document.getElementById("socialmedia");
+                    var shareButton = document.getElementById('sharebtn');
+
+                    x.style.display = "block";
+                    shareButton.style.display = "none";
+                } 
+
+            }
+
+        });
+
+
+    </script>
+
 
 </body>
 
