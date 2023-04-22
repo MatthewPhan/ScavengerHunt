@@ -38,8 +38,8 @@ def scan_qr_validation(request):
 
         # Check if there is a repeated QR Code & display warning message accordingly
         if scannedLocation in scannedLocationList:
-            print("QR Code for this location already scanned! Please scan other locations!")
-            return JsonResponse({'success':False, 'errorMsg': 'EXIST'})
+            print(f"QR Code for this location, {scannedLocation}, already scanned! Please scan other locations!")
+            return JsonResponse({'success':False, 'errorMsg': 'EXIST', 'locationName': scannedLocation})
         
         # No repeated QR Code, append the newly scanned QR Code data into list
         scannedLocationList.append(scannedLocation)

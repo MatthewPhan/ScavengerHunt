@@ -5,3 +5,4 @@ To run the program:
 
 Additional Things to note:
 - Third party APIs used: sweetalert2. js-cookie, jquery
+- Third party packages installed: html5-qrcode
