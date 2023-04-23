@@ -32,90 +32,90 @@
 
 <body onload="scannedLocationsStyle(); completedStatus();">
 
-    <!-- Retrieve all locations from Location model and print out as HTML through for-loop -->
-    <div class="grid">
-        {% if locationNameList %}
-        {% for location in locationNameList %}
-        <div class="cell">
-            <div class="inner">
-                <div class="icon" id="{{location}}"></div>
+    <div class="main-container">
+        <!-- Retrieve all locations from Location model and print out as HTML through for-loop -->
+        <div class="grid">
+            {% if locationNameList %}
+            {% for location in locationNameList %}
+            <div class="cell">
+                <div class="ring neon-white" id="{{location}}"></div>
                 <div class="caption">{{location}}</div>
             </div>
-        </div>
-        {% endfor %}
-        {% endif %}
-    </div>
-
-    <!-- QR Code "Scan Now" btn and Modal pop-up for scanner -->
-    <div class="mt-5" id="qrcontainer">
-        <!-- Button to trigger QR Code Scanner -->
-        <div class="vertical-center">
-            <button type="button" id="btn-scan-qr" class="btn btn-primary" data-toggle="modal" data-target="#qrScannerModal" data-backdrop="static" data-keyboard="false">SCAN HERE <span
-                class="bi bi-qr-code-scan"></span></button>
+            {% endfor %}
+            {% endif %}
         </div>
 
-        <!-- Modal pop-up for QR Code Scanner -->
-        <div class="modal fade" id="qrScannerModal" tabindex="-1" aria-labelledby="qrScannerModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="qrScannerModalLabel">Qr Code Scanner</h5>
-                        <button type="button" onclick="closeScannerModal()" data-dismiss="modal" class="close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- QR Reader Section in Modal Pop-up -->
-                        <div id="qr-reader" class="scan-area" data-csrf-token="{% csrf_token %}">
-                        
+        <!-- QR Code "Scan Now" btn and Modal pop-up for scanner -->
+        <div class="mt-5" id="qrcontainer">
+            <!-- Button to trigger QR Code Scanner -->
+            <div class="vertical-center">
+                <button type="button" id="btn-scan-qr" class="btn btn-primary" data-toggle="modal" data-target="#qrScannerModal" data-backdrop="static" data-keyboard="false">SCAN HERE <span
+                    class="bi bi-qr-code-scan"></span></button>
+            </div>
+
+            <!-- Modal pop-up for QR Code Scanner -->
+            <div class="modal fade" id="qrScannerModal" tabindex="-1" aria-labelledby="qrScannerModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="qrScannerModalLabel">Qr Code Scanner</h5>
+                            <button type="button" onclick="closeScannerModal()" data-dismiss="modal" class="close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- QR Reader Section in Modal Pop-up -->
+                            <div id="qr-reader" class="scan-area" data-csrf-token="{% csrf_token %}">
+                            
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Modal pop-up for sharing congratulatory post/url to social medias -->
-    <div id="socialShareModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body text-center">
-                    <h3>Congratulations!</h3>
-                    <h5> You have conquered SOC! <br> Claim your prize at xxx </h5>
-
-                    <!-- Social Media Icons (Not displayed unless WebShare API fails - catch error) -->
-                    <div class="mt-5" id="socialmedia">
-                        <ul class="share_links">
-                            <li class="bg_fb">
-                                <!-- Links to be changed to actual site URL -->
-                                <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A//05c5-116-86-80-114.ngrok-free.app/index/"
-                                    class="share_icon" rel="tooltip" title="Facebook">
-                                    <i class="fa fa-facebook"></i>
-                                </a>
-                            </li>
-
-                            <li class="bg_linkedln"><a href="https://www.LinkedIn.com/shareArticle?mini=true&url=https://05c5-116-86-80-114.ngrok-free.app&title=NUS SOC Scavenger Hunt Completed&summary=&source=" class="share_icon" rel="tooltip" title="Linkedln"><i
-                                        class=" fa fa-linkedin"></i></a></li>
-
-                            <li class="bg_twitter"><a href="https://twitter.com/intent/tweet?url=https://05c5-116-86-80-114.ngrok-free.app&text=NUS%20SOC%20Scavenger%20Hunt%20Completed!" class="share_icon" rel="tooltip" title="Twitter"><i
-                                        class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                        </ul>
+        <!-- Modal pop-up for sharing congratulatory post/url to social medias -->
+        <div id="socialShareModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
+                    <div class="modal-body text-center">
+                        <h3>Congratulations!</h3>
+                        <h5> You have conquered SOC! <br> Claim your prize at xxx </h5>
 
-                    <br>
+                        <!-- Social Media Icons (Not displayed unless WebShare API fails - catch error) -->
+                        <div class="mt-5" id="socialmedia">
+                            <ul class="share_links">
+                                <li class="bg_fb">
+                                    <!-- Links to be changed to actual site URL -->
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A//05c5-116-86-80-114.ngrok-free.app/index/"
+                                        class="share_icon" rel="tooltip" title="Facebook">
+                                        <i class="fa fa-facebook"></i>
+                                    </a>
+                                </li>
 
-                    <button type="button" class="btn btn-primary" id="sharebtn">
-                        <i class="bi bi-share"></i><span class="text">SHARE</span>
-                    </button>
+                                <li class="bg_linkedln"><a href="https://www.LinkedIn.com/shareArticle?mini=true&url=https://05c5-116-86-80-114.ngrok-free.app&title=NUS SOC Scavenger Hunt Completed&summary=&source=" class="share_icon" rel="tooltip" title="Linkedln"><i
+                                            class=" fa fa-linkedin"></i></a></li>
 
+                                <li class="bg_twitter"><a href="https://twitter.com/intent/tweet?url=https://05c5-116-86-80-114.ngrok-free.app&text=NUS%20SOC%20Scavenger%20Hunt%20Completed!" class="share_icon" rel="tooltip" title="Twitter"><i
+                                            class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+
+                        <br>
+
+                        <button type="button" class="btn btn-primary" id="sharebtn">
+                            <i class="bi bi-share"></i><span class="text">SHARE</span>
+                        </button>
+
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div>   
 
     <script type="text/javascript" src="../static/js/html5QrCodeScanner.js"></script>
     <script type="text/javascript" src="../static/js/socialShare.js"></script>

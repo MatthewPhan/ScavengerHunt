@@ -41,8 +41,8 @@ function onScanSuccess(decodedText, decodedResult) {
                     icon: 'success'
                 })
 
-                // Change the CSS of the newly scanned location by adding the custom CSS class "scannedLocation" 
-                document.getElementById(newLocation).classList.add("scannedLocation");
+                // Change the CSS of the newly scanned location by adding the custom CSS class "neon-green" 
+                document.getElementById(newLocation).classList.add("neon-green");
 
                 // Run completedStatus() to determine if user has completed the game after this scan
                 completedStatus();
@@ -92,9 +92,9 @@ function scannedLocationsStyle(){
         scannedLocationListCookieValue = JSON.parse(scannedLocationListCookieValue.replaceAll("\\054", ",").replaceAll("\\", ""));
         console.log(scannedLocationListCookieValue);
         
-        // Change the CSS for all the locations that are already scanned (loop through the list) by adding the custom CSS class "scannedLocation"
+        // Change the CSS for all the locations that are already scanned (loop through the list) by adding the custom CSS class "neon-green"
         for (let i = 0; i < scannedLocationListCookieValue.length; i++) {
-            document.getElementById(scannedLocationListCookieValue[i]).classList.add("scannedLocation");
+            document.getElementById(scannedLocationListCookieValue[i]).classList.add("neon-green");
         }
     }
 }
