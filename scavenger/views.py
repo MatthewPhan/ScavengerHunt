@@ -50,16 +50,16 @@ def scan_qr_validation(request):
         response = JsonResponse({'success': True, 'locationName': scannedLocation})
 
         # Set cookie "scannedLocationListCookie"
-        response.set_cookie('scannedLocationListCookie', json.dumps(scannedLocationList))
+        response.set_cookie('scannedLocationListCookie', json.dumps(scannedLocationList), max_age=10800)
 
         # Check if user has completed the Scavenger Hunt game, if true set cookie "completedStatusCookie" to "yes"
         totalNoLocations = Location.objects.all().count()
         if len(scannedLocationList) == totalNoLocations:
             print("User has successfully completed NUS Soc Scavenger Hunt game 2023!")
-            response.set_cookie('completedStatusCookie', 'yes')
+            response.set_cookie('completedStatusCookie', 'yes', max_age=10800)
         else:
             # User has not yet complete the game, set "completedStatusCookie" to "no"
-            response.set_cookie('completedStatusCookie', 'no')
+            response.set_cookie('completedStatusCookie', 'no', max_age=10800)
         
         # return response to AJAX call in onScanSuccess() in index.html
         return response
