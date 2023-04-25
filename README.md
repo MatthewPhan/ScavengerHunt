@@ -10,7 +10,7 @@ A mobile web application that allows users to participate in a scavenger hunt ga
 ## Developer Guide
 
 ### Development Environment Background
-For our development server, we are running Ubuntu Server 20.04 LTS on AWS EC2 (free tier). Note that this web app requires direct access to the camera, which is a powerful feature, as such it requires consent from the user and the site MUST be on a secure origin (HTTPS). For our development server, it contains a locally trusted SSL certificate, generated through [mkcert](https://github.com/FiloSottile/mkcert) \(ideally for production deployment, you should generate a SSL certificate using [Let's Encrypt](https://www.penta-code.com/how-to-get-free-https-in-10-minutes-with-letsencrypt-and-certbot/), a free and open certificate authority\).
+For our development server, we are running Ubuntu Server 20.04 LTS on AWS EC2 (free tier). Note that this web app requires direct access to the camera, which is a powerful feature, as such it requires consent from the user, and the site MUST be on a secure origin (HTTPS). Our development server, it contains a locally trusted SSL certificate, generated through [mkcert](https://github.com/FiloSottile/mkcert) \(ideally for production deployment, you should generate an SSL certificate using [Let's Encrypt](https://www.penta-code.com/how-to-get-free-https-in-10-minutes-with-letsencrypt-and-certbot/), a free and open certificate authority\).
 
 ### Installation
 1. Install pip, if haven’t  
