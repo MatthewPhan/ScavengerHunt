@@ -355,4 +355,12 @@ circle:nth-of-type(4) {
   border: 0 !important;
 }
 
+.btn-primary {
+  color:#fff !important;
+  background-color:  #003D7C !important;
+  border-color:  #003D7C !important;
+}
 
+.swal2-styled.swal2-confirm {
+  background-color: #003D7C !important;
+}
