@@ -7,6 +7,59 @@ body {
   background-color: hsl(0 0% 5%) !important;
 }
 
+.splashbg {
+  background-color: #000 !important;
+}
+
+.nuslogo {
+  text-align: center;
+  width: 100%;
+ }
+
+.wave {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ball {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin: 0 10px;
+  background-color: #003D7C ;
+  animation: wave 1s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.ball:nth-child(2) {
+  animation-delay: -0.2s;
+}
+
+.ball:nth-child(3) {
+  animation-delay: -0.4s;
+}
+
+.ball:nth-child(4) {
+  animation-delay: -0.6s;
+}
+
+.ball:nth-child(5) {
+  animation-delay: -0.8s;
+}
+
+
 .main-container {
   position: absolute;
   margin: auto;
@@ -99,7 +152,7 @@ body {
       -ms-flex-pack: center;
           justify-content: center;
   min-height: 100vh;
-  background-color: hsl(0 0% 5%);
+  background-color: #000;
 }
   
 .loader {
@@ -254,3 +307,52 @@ circle:nth-of-type(4) {
 .share_links li:hover  .share_icon {
    color: #fff;
 }
+
+/* Description Modal */
+#closebtn {
+  color: #fff;
+  background-color: #0069d9;
+}
+
+.eventcontainer {
+  color: #fff;
+  text-align: center;
+}
+
+.badgeGrid {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 960px;
+  width: 90%;
+  margin: auto;
+  background: #fff;
+}
+.badgeCell {
+  flex-basis: 33.3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #fff;
+}
+.badgeCell:before {
+  padding-bottom: 100%;
+  display: block;
+  content: '';
+}
+.circle {
+  background: #ccc;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 1em;
+}
+.inner {
+  text-align: center;
+}
+
+/* Sweet Alert Success Noti */
+.no-border {
+  border: 0 !important;
+}
+
+

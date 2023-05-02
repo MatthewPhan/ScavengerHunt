@@ -1,5 +1,6 @@
 from django.db import models
 import qrcode
+from datetime import datetime
 from io import BytesIO
 from django.core.files import File
 from PIL import Image, ImageDraw
@@ -9,12 +10,21 @@ class Location(models.Model):
     # location_name field (stores the location name)
     location_name = models.CharField(max_length=100, unique=True)
 
-    # qrcode_filepath field (stores the "qrcodes/.." file path of the generated QR code)
     qrcode_filepath = models.ImageField(blank=True, upload_to='qrcodes')
+
+    location_description = models.CharField(max_length=10000, unique=True)
+
+    location_fun_fact = models.CharField(max_length=1000, unique=True, blank=True, null=True)
+
+    location_image = models.ImageField(upload_to='locations/', default='../media/locations/default.jpg')
+
+    location_badge = models.ImageField(upload_to='badges/', default='../media/locations/default.jpg')
 
     # Print the instance of the location_name field of the model
     def __str__(self):
-        return self.location_name
+        
+        # To return location variables 
+        return '{} {} {} {} {}'.format(self.location_name, self.location_description, self.location_image, self.location_fun_fact, self.location_badge)
     
     # save() function to generate QR Code based on location name
     def save(self, *args, **kwargs):
@@ -35,3 +45,12 @@ class Location(models.Model):
         self.qrcode_filepath.save(fname, File(stream), save=False)
         canvas.close()
         super().save(*args, **kwargs)
+
+
+class Event(models.Model):
+    name = models.CharField(max_length=200)
+    when = models.DateTimeField(default=datetime.now, blank=True)
+
+    def __str__(self):
+        # To return event variables 
+        return '{} {}'.format(self.name, self.when)

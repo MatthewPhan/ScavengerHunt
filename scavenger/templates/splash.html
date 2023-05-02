@@ -1,37 +1,53 @@
 <!DOCTYPE html>
 <html>
-    {% load static %}
+{% load static %}
+
 <head>
     <meta charset="utf-8">
     <title>Splash Screen</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <style>
         /* add your CSS styling here */
     </style>
 </head>
-<body>
 
-    <div class="container">
+<body class="splashbg">
+
+    <div class="containers">
+        <div class="nuslogo">
+            <img src="../static/images/NUS_Computing_Logo.jpg">
+        </div>
+
+        <div class="wave">
+            <div class="ball"></div>
+            <div class="ball"></div>
+            <div class="ball"></div>
+            <div class="ball"></div>
+            <div class="ball"></div>
+        </div>
         
-        <svg class="loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340">
+
+        <!-- <svg class="loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 340">
             <circle cx="170" cy="170" r="160" stroke="#E2007C"/>
             <circle cx="170" cy="170" r="135" stroke="#404041"/>
             <circle cx="170" cy="170" r="110" stroke="#E2007C"/>
             <circle cx="170" cy="170" r="85" stroke="#404041"/>
-        </svg>
-        
+        </svg> -->
+
     </div>
 
     <script>
         // wait for 3 seconds and then redirect to main page
-        setTimeout(function() {
+        setTimeout(function () {
             window.location.href = "{% url 'main_page' %}";
         }, 3000);
     </script>
 
-    
+
 </body>
+
 </html>

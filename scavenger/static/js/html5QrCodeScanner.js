@@ -1,10 +1,10 @@
 // HTML5QrcodeScanner
 const html5QrcodeScanner = new Html5QrcodeScanner(
-"qr-reader", { fps: 10, qrbox: 250, rememberLastUsedCamera: false });
+    "qr-reader", { fps: 10, qrbox: 250, rememberLastUsedCamera: false });
 
 // Process QR Code using HTML5QRcodeScanner
 function onScanSuccess(decodedText, decodedResult) {
-    
+
     // Close the QR code scanning after the result is retrieved, do so by using javascript to trigger/click the "Stop Scanning" btn
     $("#html5-qrcode-button-camera-stop").trigger("click");
 
@@ -12,7 +12,7 @@ function onScanSuccess(decodedText, decodedResult) {
     $('#qrScannerModal').modal('hide');
 
     // Handle on success condition with the decoded text or result
-    console.log(`Scan result: ${decodedText}`, decodedResult);   
+    console.log(`Scan result: ${decodedText}`, decodedResult);
 
     // Send the data to the Django view using AJAX POST
     const csrfToken = $('[name="csrfmiddlewaretoken"]').attr('value');
@@ -34,11 +34,16 @@ function onScanSuccess(decodedText, decodedResult) {
 
                 // Display success alert
                 const newLocation = response['locationName'];
-                console.log("You have found a new location - " + newLocation + "!");
+                const newFact = response['locationFact'];
+                const newBadge = response['locationBadge'];
+
                 Swal.fire({
-                    title: "Good job!",
-                    text: "You have found a new location - " + newLocation + "!",
-                    icon: 'success'
+                    title: "Nice, you have collected a badge! This is the " + newLocation,
+                    text: "Cool Fact: " + newFact,
+                    iconHtml: '<img src="' + "/media/" + newBadge + '"' +' width="100"' + ' height="100"' + '>',
+                    customClass: {
+                        icon: 'no-border'
+                    }
                 })
 
                 // Change the CSS of the newly scanned location by adding the custom CSS class "neon-green" 
@@ -82,16 +87,16 @@ function onScanSuccess(decodedText, decodedResult) {
 }
 
 // Style all the icons in cookie "scannedLocationListCookie" (to run this everytime web app loads)
-function scannedLocationsStyle(){
+function scannedLocationsStyle() {
     // Get the value of cookie "scannedLocationListCookie", note it returns a string representation, [\"location_1\"\054 \"location_2\"..]
     let scannedLocationListCookieValue = Cookies.get('scannedLocationListCookie');
-    
+
     // Only process accordingly when there are values in the cookie "scannedLocationListCookie"
     if (scannedLocationListCookieValue) {
         // Convert the string representation to list
         scannedLocationListCookieValue = JSON.parse(scannedLocationListCookieValue.replaceAll("\\054", ",").replaceAll("\\", ""));
         console.log(scannedLocationListCookieValue);
-        
+
         // Change the CSS for all the locations that are already scanned (loop through the list) by adding the custom CSS class "neon-green"
         for (let i = 0; i < scannedLocationListCookieValue.length; i++) {
             document.getElementById(scannedLocationListCookieValue[i]).classList.add("neon-green");
@@ -100,7 +105,7 @@ function scannedLocationsStyle(){
 }
 
 // Determine if user completed the game by checking cookie "completedStatusCookie" & style the web app accordingly (to run this everytime web app loads)
-function completedStatus(){
+function completedStatus() {
     // Get the value of cookie "completedStatusCookie"
     let completedStatusCookieValue = Cookies.get('completedStatusCookie');
     if (completedStatusCookieValue === 'yes') {
@@ -111,7 +116,7 @@ function completedStatus(){
 }
 
 // Close the scanner
-function closeScannerModal(){
+function closeScannerModal() {
     // Stop the scan
     $("#html5-qrcode-button-camera-stop").trigger("click");
 }

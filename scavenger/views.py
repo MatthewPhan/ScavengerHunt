@@ -3,14 +3,19 @@ import json
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from .models import Location
+from .models import Location, Event
 
 def splash_screen(request):
     return render(request, 'splash.html')
 
 def main_page(request):
-    locationNameList = Location.objects.values_list('location_name', flat=True).distinct()
-    return render(request, 'index.html', {'locationNameList' : locationNameList})
+    # Get location name and description and store it into a list. The corresponding name and description are separated by tuples. 
+    locationDetailsList = Location.objects.values_list('location_name', 'location_description', 'location_image').distinct()
+    # Get event name and datetime
+    eventList = Event.objects.values_list('name', 'when').distinct()
+    print({'locationDetailsList': locationDetailsList, 'eventList': eventList})
+
+    return render(request, 'index.html', {'locationDetailsList': locationDetailsList, 'eventList': eventList})
 
 def scan_qr_validation(request):
     if request.method == 'POST':
@@ -46,8 +51,13 @@ def scan_qr_validation(request):
         print(f"You have found a new location - {scannedLocation}!")
         print(scannedLocationList)
 
+        # Retrieve database of corresponding location badge and fact based on the location name
+        successDetails = Location.objects.get(location_name=scannedLocation)
+        location_badge = str(successDetails.location_badge)
+        location_fun_fact = successDetails.location_fun_fact
+
         # Set the json data for success alert message
-        response = JsonResponse({'success': True, 'locationName': scannedLocation})
+        response = JsonResponse({'success': True, 'locationName': scannedLocation, 'locationFact': location_fun_fact, 'locationBadge': location_badge})
 
         # Set cookie "scannedLocationListCookie"
         response.set_cookie('scannedLocationListCookie', json.dumps(scannedLocationList), max_age=10800)
