@@ -86,3 +86,31 @@ def scan_qr_validation(request):
         return response
 
     return render(request, 'index.html')
+
+def scan_redeem_check(request):
+    if request.method == 'POST':
+        # Retrieve QR Code data (i.e. location name) from AJAX Call where the data is stored in key "decodedText"
+        scannedQr = request.POST.get('decodedText')
+
+        # Validation of QR Code data: To check if user scanned the QR Code that is generated only by our web-app
+        customRedeemIdentifier = "REDEEMSMOOYVOUCHERNUS"
+
+        # Check if prizeRedeemedCookie exists, and set to "no" if does not exist 
+        if 'prizeRedeemedCookie' not in request.COOKIES:
+            response = JsonResponse({'success': False})
+            response.set_cookie('prizeRedeemedCookie', 'no', max_age=10800)
+
+        # Generate error pop-up message for invalid QR Code
+        if customRedeemIdentifier not in scannedQr:
+            print("Invalid QR! Please scan the Redeem Prize QR from Student Ambassador!")
+            return JsonResponse({'success':False, 'errorMsg': 'INVALID'})
+
+        # Set cookie "prizeRedeemedCookie" to "yes" since it passed the check
+        response = JsonResponse({'success': True})
+        print("User successfully redeemed the prize!")
+        response.set_cookie('prizeRedeemedCookie', 'yes', max_age=10800)
+        
+        # return response to AJAX call in onScanSuccessRedeem()
+        return response
+
+    return render(request, 'index.html')

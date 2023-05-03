@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-b-bn4t876c!e4##=4(n1!2)1!m$g6adfxgny8_58jzo61%4xxs
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ec2-18-143-67-73.ap-southeast-1.compute.amazonaws.com', '192.168.1.12', 'localhost', '127.0.0.1', '*']
+ALLOWED_HOSTS = ['7ab6-175-156-94-155.ngrok-free.app', '192.168.1.12', 'localhost', '127.0.0.1', '*']
 
 
 # Application definition
@@ -138,7 +138,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-CSRF_TRUSTED_ORIGINS = ['https://127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://7ab6-175-156-94-155.ngrok-free.app', 'https://127.0.0.1']
 
 MESSAGE_TAGS = {
         messages.DEBUG: 'alert-secondary',

@@ -318,6 +318,41 @@ circle:nth-of-type(4) {
    color: #fff;
 }
 
+#redeembtn {
+  background-color: #EF7C00 !important;
+  border: #EF7C00;
+}
+
+.modal {
+  background: rgba(255, 255, 255, 0);
+  backdrop-filter: blur(10px);
+}
+
+#redeem-qr-reader__dashboard_section > div:nth-child(2) {
+  padding: 1em 0;
+}
+
+#redeem-qr-reader > div:nth-child(1) {
+  display: none;
+}
+
+#redeemStatus{
+  left: 0;
+  right: 0;
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+}
+
+#redeem-qr-reader__dashboard_section #html5-qrcode-anchor-scan-type-change {
+  display: none;
+}
+
+#redeemqrcontainer {
+  text-align: center;
+  padding: 0em 0 0.7em 0;
+}
+
 /* Description Modal */
 #closebtn {
   color: #fff;

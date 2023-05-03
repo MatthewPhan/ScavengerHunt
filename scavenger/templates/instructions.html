@@ -31,13 +31,12 @@
 
 </head>
 
-<body onload="completedStatus(); countdown();">
+<body onload="completedStatus(); countdown(); redeemStatusCheck(); redeemStatusCheck();">
     {% if eventList %}
     {% for obj in eventList %}
     <div class="eventcontainer">
-        <div> {{obj.0}} will end in: </div>
         <div id="event-box"> {{obj.1|date:"M d, Y H:i:s"}} </div>
-        <div> Time left: </div>
+        <div> Scavenger Hunt will end in: </div>
         <div id="countdown-box" class="text-center mt-3 h1">
             <div class="spinner-border" role="status"></div>
         </div>
@@ -79,7 +78,7 @@
         </div>
 
         <!-- Modal pop-up for sharing congratulatory post/url to social medias -->
-        <div id="socialShareModal" class="modal fade" role="dialog">
+        <div id="socialShareModal" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
             <div class="modal-dialog">
                 <!-- Modal content-->
                 <div class="modal-content">
@@ -183,6 +182,42 @@
 
                         <br>
 
+                         <!-- QR Code "Redeem Prize" btn and Modal pop-up for scanner -->
+                         <div id="redeemqrcontainer">
+                            <!-- Button to trigger QR Code Scanner -->
+                            <div class="vertical-center">
+                                <button type="button" id="redeembtn" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#qrScannerModalRedeem" data-backdrop="static" data-keyboard="false">REDEEM PRIZE <span
+                                        class="bi bi-trophy"></span></button>
+                            </div>
+
+                            <!-- Modal pop-up for QR Code Scanner -->
+                            <div class="modal fade" id="qrScannerModalRedeem" tabindex="-1" aria-labelledby="qrScannerModalLabelRedeem"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="qrScannerModalLabelRedeem">Qr Code Scanner</h5>
+                                            <button type="button" onclick="closeRedeemScannerModal()" class="close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- QR Reader Section in Modal Pop-up -->
+                                            <div id="redeem-qr-reader" class="scan-area" data-csrf-token="{% csrf_token %}">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="redeemStatus">
+                            
+                        </div>
+
+
                         <button type="button" class="btn btn-primary" id="sharebtn">
                             <i class="bi bi-share"></i><span class="text">SHARE</span>
                         </button>
@@ -195,6 +230,7 @@
     </div>   
 
     <script type="text/javascript" src="../static/js/html5QrCodeScanner.js"></script>
+    <script type="text/javascript" src="../static/js/redeemQrScanner.js"></script>
     <script type="text/javascript" src="../static/js/socialShare.js"></script>
     <script src="../static/js/timer.js"></script>
 </body>
