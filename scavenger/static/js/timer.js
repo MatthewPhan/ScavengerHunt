@@ -1,8 +1,7 @@
 function countdown() {
+    document.getElementById('event-box').style.display = "none";
     const eventBox = document.getElementById('event-box')
     const countdownBox = document.getElementById('countdown-box')
-
-    console.log(eventBox.textContent);
 
     const eventDate = Date.parse(eventBox.textContent)
 

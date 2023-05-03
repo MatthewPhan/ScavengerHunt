@@ -38,9 +38,8 @@
     {% if eventList %}
     {% for obj in eventList %}
     <div class="eventcontainer">
-        <div> {{obj.0}} will end in: </div>
         <div id="event-box"> {{obj.1|date:"M d, Y H:i:s"}} </div>
-        <div> Time left: </div>
+        <div> Scavenger Hunt will end in: </div>
         <div id="countdown-box" class="text-center mt-3 h1">
             <div class="spinner-border" role="status"></div>
         </div>

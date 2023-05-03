@@ -8,7 +8,8 @@ body {
 }
 
 .splashbg {
-  background-color: #FAF9F6 !important;
+  background-color: #000 !important;
+  margin-top: 20em;
 }
 
 .nuslogo {
@@ -736,7 +737,25 @@ div.mobile-faq-panel.show {
 
 /* 100% Image Width on Smaller Screens */
 @media only screen and (max-width: 700px){
+  .splashbg {
+    padding-top: 20em !important;
+  }
+
   .socMapImageModal-content {
     width: 100%;
   }
+
+  .modal-body {
+    padding: 15px 2px;
+  }
+
+  .badgeGrid {
+    width: auto;
+  }
+
+  .swal2-image {
+    margin: 0em;
+  }
+
+  
 }
