@@ -1,4 +1,4 @@
-// HTML5QrcodeScanner
+// HTML5QrcodeScanner (might throw an error msg for instructions.html & socmaps.html as the id "qr-reader" only exists in index.html - small matter)
 const html5QrcodeScanner = new Html5QrcodeScanner(
     "qr-reader", { fps: 10, qrbox: 250, rememberLastUsedCamera: false });
 
@@ -46,8 +46,14 @@ function onScanSuccess(decodedText, decodedResult) {
                     }
                 })
 
-                // Change the CSS of the newly scanned location by adding the custom CSS class "neon-green" 
-                document.getElementById(newLocation).classList.add("neon-green");
+                // Change the content of the scanned location to their respective badge as bg image, remove the blur effect and remove caption
+                const badgeImageUrl = "/media/" + newBadge;
+                document.getElementById(newLocation).style.backgroundImage = `url('${badgeImageUrl}')`;
+                document.getElementById(newLocation).style.backgroundSize = "100px";
+                document.getElementById(newLocation).style.backgroundPosition = "center";
+                document.getElementById(newLocation).getElementsByClassName("blur")[0].style.backdropFilter = "blur(0)";
+                document.getElementById(newLocation).getElementsByClassName("blur")[0].style.background = "rgba(255, 255, 255, 0.2)";
+                document.getElementById(newLocation).nextElementSibling.innerHTML = "";
 
                 // Run completedStatus() to determine if user has completed the game after this scan
                 completedStatus();
@@ -97,9 +103,19 @@ function scannedLocationsStyle() {
         scannedLocationListCookieValue = JSON.parse(scannedLocationListCookieValue.replaceAll("\\054", ",").replaceAll("\\", ""));
         console.log(scannedLocationListCookieValue);
 
-        // Change the CSS for all the locations that are already scanned (loop through the list) by adding the custom CSS class "neon-green"
+        // Change the CSS for all the locations that are already scanned (loop through the list), and replace the background-image to their respective badges
         for (let i = 0; i < scannedLocationListCookieValue.length; i++) {
-            document.getElementById(scannedLocationListCookieValue[i]).classList.add("neon-green");
+            
+            // Retrieve the location name and badge url
+            let location_name = Object.keys(scannedLocationListCookieValue[i])[0]
+            let location_badge = "/media/" + Object.values(scannedLocationListCookieValue[i])[0];
+            // Change the content of the scanned location to their respective badge as bg image, remove the blur effect and remove caption
+            document.getElementById(location_name).style.backgroundImage = `url('${location_badge}')`;
+            document.getElementById(location_name).style.backgroundSize = "100px";
+            document.getElementById(location_name).style.backgroundPosition = "center";
+            document.getElementById(location_name).getElementsByClassName("blur")[0].style.backdropFilter = "blur(0)";
+            document.getElementById(location_name).getElementsByClassName("blur")[0].style.background = "rgba(255, 255, 255, 0.2)";
+            document.getElementById(location_name).nextElementSibling.innerHTML = "";
         }
     }
 }

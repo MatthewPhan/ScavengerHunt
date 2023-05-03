@@ -13,9 +13,19 @@ def main_page(request):
     locationDetailsList = Location.objects.values_list('location_name', 'location_description', 'location_image').distinct()
     # Get event name and datetime
     eventList = Event.objects.values_list('name', 'when').distinct()
-    print({'locationDetailsList': locationDetailsList, 'eventList': eventList})
+    # print({'locationDetailsList': locationDetailsList, 'eventList': eventList})
 
     return render(request, 'index.html', {'locationDetailsList': locationDetailsList, 'eventList': eventList})
+
+def instructions_page(request):
+    # Get event name and datetime
+    eventList = Event.objects.values_list('name', 'when').distinct()
+    return render(request, 'instructions.html', {'eventList': eventList})
+
+def socmaps_page(request):
+    # Get event name and datetime
+    eventList = Event.objects.values_list('name', 'when').distinct()
+    return render(request, 'socmaps.html', {'eventList': eventList})
 
 def scan_qr_validation(request):
     if request.method == 'POST':
@@ -33,7 +43,7 @@ def scan_qr_validation(request):
         # remove the customQRIdentifier from QR Code data
         scannedLocation = scannedLocation.replace(customQRIdentifier, '')
 
-        # Create a new list "scannedLocationList" which constantly gets updated with newly scanned locations, and set it into the cookie "scannedLocationListCookie"
+        # Create a new list of dict (location_name:location_badge) "scannedLocationList" which constantly gets updated with newly scanned locations, and set it into the cookie "scannedLocationListCookie"
         scannedLocationList = []
 
         # Check if "scannedLocationListCookie" is in the cookies on client's browser & populate the list "scannedLocationList"
@@ -42,19 +52,20 @@ def scan_qr_validation(request):
             scannedLocationList = json.loads(request.COOKIES['scannedLocationListCookie'])
 
         # Check if there is a repeated QR Code & display warning message accordingly
-        if scannedLocation in scannedLocationList:
+        if any(scannedLocation in loc for loc in scannedLocationList):
             print(f"QR Code for this location, {scannedLocation}, already scanned! Please scan other locations!")
             return JsonResponse({'success':False, 'errorMsg': 'EXIST', 'locationName': scannedLocation})
-        
-        # No repeated QR Code, append the newly scanned QR Code data into list
-        scannedLocationList.append(scannedLocation)
-        print(f"You have found a new location - {scannedLocation}!")
-        print(scannedLocationList)
 
         # Retrieve database of corresponding location badge and fact based on the location name
         successDetails = Location.objects.get(location_name=scannedLocation)
         location_badge = str(successDetails.location_badge)
         location_fun_fact = successDetails.location_fun_fact
+
+        # No repeated QR Code, append the newly scanned location name and badge into list
+        loc_name_badge_dict = {scannedLocation : location_badge}
+        scannedLocationList.append(loc_name_badge_dict)
+        print(f"You have found a new location - {scannedLocation}!")
+        print(scannedLocationList)
 
         # Set the json data for success alert message
         response = JsonResponse({'success': True, 'locationName': scannedLocation, 'locationFact': location_fun_fact, 'locationBadge': location_badge})

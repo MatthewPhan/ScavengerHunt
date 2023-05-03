@@ -6,12 +6,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>NUS SOC Scavenger Hunt'23</title>
+    <title>NUS SOC Scavenger Hunt'23 SOC Maps</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 
-    <script src="../static/js/modal.js"></script>
-    <script src="../static/js/timer.js"></script>
     <script src="../node_modules/html5-qrcode/html5-qrcode.min.js" type="node_modules"></script>
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
@@ -33,8 +31,8 @@
 
 </head>
 
-<body onload="scannedLocationsStyle(); completedStatus(); countdown();">
-
+<body onload="completedStatus(); countdown();">
+   
     {% if eventList %}
     {% for obj in eventList %}
     <div class="eventcontainer">
@@ -47,54 +45,105 @@
     </div>
     {% endfor %}
     {% endif %}
-
-
-    <div class="main-container">
-        <!-- Retrieve all locations from Location model and print out as HTML through for-loop -->
-        <div class="grid">
-            {% if locationDetailsList %}
-            {% for obj in locationDetailsList %}
-            <div id="cell" class="cell" onclick="openModal('{{obj.0}}', '{{obj.1}}', '{{obj.2}}')">
-                <div class="ring blur" id="{{obj.0}}" 
-                    style="background-image: url(../../media/{{obj.2}});
-                            background-size: 150px;">
-                    <div class="blur"></div>
-                </div>
-                <div class="caption">{{obj.0}}</div>
-            </div>
-            {% endfor %}
-            {% endif %}
-        </div>
-
-        <!-- QR Code "Scan Now" btn and Modal pop-up for scanner -->
-        <div class="mt-3" id="qrcontainer">
-            <!-- Button to trigger QR Code Scanner -->
-            <div class="vertical-center">
-                <button type="button" id="btn-scan-qr" class="btn btn-primary" data-toggle="modal"
-                    data-target="#qrScannerModal" data-backdrop="static" data-keyboard="false">SCAN HERE <span
-                        class="bi bi-qr-code-scan"></span></button>
-            </div>
-
-            <!-- Modal pop-up for QR Code Scanner -->
-            <div class="modal fade" id="qrScannerModal" tabindex="-1" aria-labelledby="qrScannerModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="qrScannerModalLabel">Qr Code Scanner</h5>
-                            <button type="button" onclick="closeScannerModal()" data-dismiss="modal" class="close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+       
+    <!-- start mobile menu --> 
+    <div class="mobile-expertise-faq">
+            
+        <div>
+            <p class="mobile-faq-menu">COM1</p>
+            <div class="mobile-faq-panel">
+                <div class="expertise-faq">
+                    <div style="border-bottom: solid #f4f4f4 1px;">
+                        
+                        <p class="faq-accordion" style="padding: 18px 18px 6px; margin: 12px 0">Basement</p>
+                        <div class="faq-panel">
+                            <img class="socMapImages" src="../static/images/COM1_Basement.jpg" alt="COM1_Basement" style="width:100%;max-width:300px">
                         </div>
-                        <div class="modal-body">
-                            <!-- QR Reader Section in Modal Pop-up -->
-                            <div id="qr-reader" class="scan-area" data-csrf-token="{% csrf_token %}">
 
-                            </div>
+                        <p class="faq-accordion" style="padding: 15px 18px; margin: 0">Level 1</p>
+                        <div class="faq-panel">
+                            <img class="socMapImages"  src="../static/images/COM1_L1.jpg" alt="COM1_L1" style="width:100%;max-width:300px">
+                        </div>
+                        
+                        <p class="faq-accordion" style="padding: 15px 18px; margin: 0">Level 2</p>
+                        <div class="faq-panel">
+                            <img class="socMapImages"  src="../static/images/COM1_L2.jpg" alt="COM1_L2" style="width:100%;max-width:300px">
+                        </div>
+
+                        <p class="faq-accordion" style="padding: 15px 18px; margin: 0">Level 3</p>
+                        <div class="faq-panel">
+                            <img class="socMapImages"  src="../static/images/COM1_L3.jpg" alt="COM1_L3" style="width:100%;max-width:300px">
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div>
+            <p class="mobile-faq-menu">COM2</p>
+            <div class="mobile-faq-panel">
+                <div class="expertise-faq">
+                    <div style="border-bottom: solid #f4f4f4 1px;">
+                        
+                        <p class="faq-accordion" style="padding: 18px 18px 6px; margin: 12px 0">Basement</p>
+                        <div class="faq-panel">
+                            <img class="socMapImages"  src="../static/images/COM2_Basement.jpg" alt="COM2_Basement" style="width:100%;max-width:300px">
+                        </div>
+
+                        <p class="faq-accordion" style="padding: 15px 18px; margin: 0">Level 1</p>
+                        <div class="faq-panel">
+                            <img class="socMapImages"  src="../static/images/COM2_L1.jpg" alt="COM2_L1" style="width:100%;max-width:300px">
+                        </div>
+                        
+                        <p class="faq-accordion" style="padding: 15px 18px; margin: 0">Level 2</p>
+                        <div class="faq-panel">
+                            <img class="socMapImages"  src="../static/images/COM2_L2.jpg" alt="COM2_L2" style="width:100%;max-width:300px">
+                        </div>
+
+                        <p class="faq-accordion" style="padding: 15px 18px; margin: 0">Level 3</p>
+                        <div class="faq-panel">
+                            <img class="socMapImages"  src="../static/images/COM2_L3.jpg" alt="COM2_L3" style="width:100%;max-width:300px">
+                        </div>
+
+                        <p class="faq-accordion" style="padding: 15px 18px; margin: 0">Level 4</p>
+                        <div class="faq-panel">
+                            <img class="socMapImages"  src="../static/images/COM2_L4.jpg" alt="COM2_L4" style="width:100%;max-width:300px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <p class="mobile-faq-menu">COM3</p>
+            <div class="mobile-faq-panel">
+                <div class="expertise-faq">
+                    <div style="border-bottom: solid #f4f4f4 1px;">
+                        
+                        <p class="faq-accordion" style="padding: 18px 18px 6px; margin: 12px 0">Basement</p>
+                        <div class="faq-panel">
+                            <img class="socMapImages"  src="../static/images/COM3-BASEMENT1-2a.jpg" alt="COM3_Basement" style="width:100%;max-width:300px">
+                        </div>
+
+                        <p class="faq-accordion" style="padding: 15px 18px; margin: 0">Level 1</p>
+                        <div class="faq-panel">
+                            <img class="socMapImages"  src="../static/images/COM3-LEVEL1-3.jpg" alt="COM3_L1" style="width:100%;max-width:300px">
+                        </div>
+                        
+                        <p class="faq-accordion" style="padding: 15px 18px; margin: 0">Level 2</p>
+                        <div class="faq-panel">
+                            <img class="socMapImages"  src="../static/images/COM3-LEVEL2-3b.jpg" alt="COM3_L2" style="width:100%;max-width:300px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+         <!-- The Modal -->
+         <div id="socMapImageModal">
+            <span class="close">&times;</span>
+            <img class="socMapImageModal-content" id="img01">
+            <div id="socMapImageModal-caption"></div>
         </div>
 
         <!-- Modal pop-up for sharing congratulatory post/url to social medias -->
@@ -210,11 +259,15 @@
                 </div>
             </div>
         </div>
+
     </div>
+    <!-- End mobile menu --> 
+
 
     <script type="text/javascript" src="../static/js/html5QrCodeScanner.js"></script>
+    <script type="text/javascript" src="../static/js/accordionimagemodal.js"></script>
     <script type="text/javascript" src="../static/js/socialShare.js"></script>
-
+    <script src="../static/js/timer.js"></script>
 </body>
 
 </html>
