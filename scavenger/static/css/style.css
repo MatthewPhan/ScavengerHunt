@@ -345,7 +345,7 @@ circle:nth-of-type(4) {
 }
 
 #redeem-qr-reader__dashboard_section #html5-qrcode-anchor-scan-type-change {
-  display: none;
+  display: none !important;
 }
 
 #redeemqrcontainer {
