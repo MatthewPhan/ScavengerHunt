@@ -27,6 +27,11 @@ def socmaps_page(request):
     eventList = Event.objects.values_list('name', 'when').distinct()
     return render(request, 'socmaps.html', {'eventList': eventList})
 
+def acknowledgement(request):
+    # Get event name and datetime
+    eventList = Event.objects.values_list('name', 'when').distinct()
+    return render(request, 'acknowledgement.html', {'eventList': eventList})
+
 def scan_qr_validation(request):
     if request.method == 'POST':
         # Retrieve QR Code data (i.e. location name) from AJAX Call where the data is stored in key "decodedText"
@@ -71,16 +76,16 @@ def scan_qr_validation(request):
         response = JsonResponse({'success': True, 'locationName': scannedLocation, 'locationFact': location_fun_fact, 'locationBadge': location_badge})
 
         # Set cookie "scannedLocationListCookie"
-        response.set_cookie('scannedLocationListCookie', json.dumps(scannedLocationList), max_age=10800)
+        response.set_cookie('scannedLocationListCookie', json.dumps(scannedLocationList), max_age=86400)
 
         # Check if user has completed the Scavenger Hunt game, if true set cookie "completedStatusCookie" to "yes"
         totalNoLocations = Location.objects.all().count()
         if len(scannedLocationList) == totalNoLocations:
             print("User has successfully completed NUS Soc Scavenger Hunt game 2023!")
-            response.set_cookie('completedStatusCookie', 'yes', max_age=10800)
+            response.set_cookie('completedStatusCookie', 'yes', max_age=86400)
         else:
             # User has not yet complete the game, set "completedStatusCookie" to "no"
-            response.set_cookie('completedStatusCookie', 'no', max_age=10800)
+            response.set_cookie('completedStatusCookie', 'no', max_age=86400)
         
         # return response to AJAX call in onScanSuccess() in index.html
         return response
@@ -98,7 +103,7 @@ def scan_redeem_check(request):
         # Check if prizeRedeemedCookie exists, and set to "no" if does not exist 
         if 'prizeRedeemedCookie' not in request.COOKIES:
             response = JsonResponse({'success': False})
-            response.set_cookie('prizeRedeemedCookie', 'no', max_age=10800)
+            response.set_cookie('prizeRedeemedCookie', 'no', max_age=86400)
 
         # Generate error pop-up message for invalid QR Code
         if customRedeemIdentifier not in scannedQr:
@@ -108,7 +113,7 @@ def scan_redeem_check(request):
         # Set cookie "prizeRedeemedCookie" to "yes" since it passed the check
         response = JsonResponse({'success': True})
         print("User successfully redeemed the prize!")
-        response.set_cookie('prizeRedeemedCookie', 'yes', max_age=10800)
+        response.set_cookie('prizeRedeemedCookie', 'yes', max_age=86400)
         
         # return response to AJAX call in onScanSuccessRedeem()
         return response

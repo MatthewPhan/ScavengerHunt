@@ -40,6 +40,7 @@ function onScanSuccess(decodedText, decodedResult) {
                 Swal.fire({
                     title: "Nice, you have collected a badge! This is the " + newLocation,
                     text: "Cool Fact: " + newFact,
+                    color: '#EF7C00',
                     iconHtml: '<img src="' + "/media/" + newBadge + '"' +' width="100"' + ' height="100"' + '>',
                     customClass: {
                         icon: 'no-border'
@@ -49,7 +50,7 @@ function onScanSuccess(decodedText, decodedResult) {
                 // Change the content of the scanned location to their respective badge as bg image, remove the blur effect and remove caption
                 const badgeImageUrl = "/media/" + newBadge;
                 document.getElementById(newLocation).style.backgroundImage = `url('${badgeImageUrl}')`;
-                document.getElementById(newLocation).style.backgroundSize = "100px";
+                document.getElementById(newLocation).style.backgroundSize = "115px";
                 document.getElementById(newLocation).style.backgroundPosition = "center";
                 document.getElementById(newLocation).getElementsByClassName("blur")[0].style.backdropFilter = "blur(0)";
                 document.getElementById(newLocation).getElementsByClassName("blur")[0].style.background = "rgba(255, 255, 255, 0.2)";
@@ -111,7 +112,7 @@ function scannedLocationsStyle() {
             let location_badge = "/media/" + Object.values(scannedLocationListCookieValue[i])[0];
             // Change the content of the scanned location to their respective badge as bg image, remove the blur effect and remove caption
             document.getElementById(location_name).style.backgroundImage = `url('${location_badge}')`;
-            document.getElementById(location_name).style.backgroundSize = "100px";
+            document.getElementById(location_name).style.backgroundSize = "115px";
             document.getElementById(location_name).style.backgroundPosition = "center";
             document.getElementById(location_name).getElementsByClassName("blur")[0].style.backdropFilter = "blur(0)";
             document.getElementById(location_name).getElementsByClassName("blur")[0].style.background = "rgba(255, 255, 255, 0.2)";

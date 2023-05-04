@@ -19,6 +19,8 @@ from scavenger import views
 from django.urls import include, path, re_path
 from django.conf.urls.static import static
 from django.conf import settings
+from django.views.generic.base import RedirectView
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,4 +30,6 @@ urlpatterns = [
     path('instructions/', views.instructions_page, name='instructions_page'),
     path('socmaps/', views.socmaps_page, name='socmaps_page'),
     path('scan_redeem_check/', views.scan_redeem_check, name='scan_redeem_check'),
+    path('acknowledgement/', views.acknowledgement, name='acknowledgement'),
+    path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('favicon.ico'))),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
