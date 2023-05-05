@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-b-bn4t876c!e4##=4(n1!2)1!m$g6adfxgny8_58jzo61%4xxs
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['fc23-175-156-94-155.ngrok-free.app', '192.168.1.12', 'localhost', '127.0.0.1', '*']
+ALLOWED_HOSTS = ['https://nussocscavenger.caf.la:8000', 'https://54.169.10.63:8000','192.168.1.12', 'localhost', '127.0.0.1', '*']
 
 
 # Application definition
@@ -122,11 +122,13 @@ USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-STATIC_ROOT = "../django-app/scavenger/static/"
+
+STATIC_ROOT = "/home/ubuntu/Django_App/ScavengerHunt/scavenger/static/"
 STATIC_URL = 'static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static/"),
 )
+#DEBUG=True
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -138,7 +140,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-CSRF_TRUSTED_ORIGINS = ['https://fc23-175-156-94-155.ngrok-free.app', 'https://127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://nussocscavenger.caf.la', 'http://nussocscavenger.caf.la',  'https://nussocscavenger.caf.la:8000', 'https://54.169.10.63:8000', 'https://127.0.0.1']
 
 MESSAGE_TAGS = {
         messages.DEBUG: 'alert-secondary',

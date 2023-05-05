@@ -39,7 +39,9 @@ function onScanSuccessRedeem(decodedText, decodedResult) {
                 const src = document.getElementById("redeemStatus");
                 src.appendChild(img);
                 document.getElementById("redeembtn").style.display= 'none';
-                return;
+
+                // reload browser to prevent the possibility of HTML5QrScanner bug of infinite ajax calls
+                window.location.reload();
             }
             else {
                 // User scanned invalid QR, 
@@ -53,7 +55,10 @@ function onScanSuccessRedeem(decodedText, decodedResult) {
                         text: "Invalid QR! Please scan the Redeem Prize QR from Student Ambassador!",
                         icon: 'error'
                     })
-                    return;
+                    // reload browser to prevent the possibility of HTML5QrScanner bug of infinite ajax calls, give a 1.5 seconds time of displaying the invalid modal pop-up
+                    setTimeout(function(){
+                        window.location.reload();
+                     }, 1500);
                 }
             }
         },
