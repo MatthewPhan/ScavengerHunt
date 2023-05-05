@@ -32,4 +32,5 @@ urlpatterns = [
     path('scan_redeem_check/', views.scan_redeem_check, name='scan_redeem_check'),
     path('acknowledgement/', views.acknowledgement, name='acknowledgement'),
     path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('favicon.ico'))),
+    path('apple-touch-icon.png', RedirectView.as_view(url=staticfiles_storage.url('apple-touch-icon.png'))),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
